@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 83786222b3d3e3340aef058cfd5d0141
+guid: 2685d206fcdf7844daad90c1a9cfa00f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8385222122240126650
-    second: Harold_0
+      213: 6743045710341077571
+    second: FireWolf_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Harold_0
+      name: FireWolf_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 4
         y: 0
-        width: 265
-        height: 273
+        width: 24
+        height: 31
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 641512918e4b1ab80800000000000000
-      internalID: -8385222122240126650
+      spriteID: 34af91de85c149d50800000000000000
+      internalID: 6743045710341077571
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Harold_0: -8385222122240126650
+      FireWolf_0: 6743045710341077571
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

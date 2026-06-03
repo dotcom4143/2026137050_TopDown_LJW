@@ -2,13 +2,17 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 3f;
-    [SerializeField] private GameObject coinPrefab;
-    [SerializeField] private Sprite[] enemySprites;
-    [SerializeField] private AudioClip deathSound;
-
     private Transform playerTransform;
     private SpriteRenderer spriteRenderer;
+
+    private MonsterData myData;
+    private float currentHp;
+    private float currentMoveSpeed;
+
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
     private void Start()
     {
@@ -18,14 +22,16 @@ public class EnemyController : MonoBehaviour
             playerTransform = player.transform;
         }
 
-        spriteRenderer = GetComponent<SpriteRenderer>();
-        if (spriteRenderer != null && enemySprites != null && enemySprites.Length > 0)
-        {
-            int randomIndex = Random.Range(0, enemySprites.Length);
-            spriteRenderer.sprite = enemySprites[randomIndex];
-        }
+        if (myData == null) Invoke("DieAndDropCoin", 5f);
+    }
 
-        Invoke("DieAndDropCoin", 5f);
+    public void Setup(MonsterData data)
+    {
+        myData = data;
+        
+        if (spriteRenderer != null) spriteRenderer.sprite = data.monsterSprite;
+        currentHp = data.maxHp;
+        currentMoveSpeed = data.moveSpeed;
     }
 
     private void Update()
@@ -33,20 +39,49 @@ public class EnemyController : MonoBehaviour
         if (playerTransform != null)
         {
             Vector3 direction = (playerTransform.position - transform.position).normalized;
-            transform.position += direction * moveSpeed * Time.deltaTime;
+            transform.position += direction * currentMoveSpeed * Time.deltaTime;
         }
+    }
+
+    public void TakeDamage(float amount, string weaponElement)
+    {
+        // 상성 데미지 계산 함수 호출
+        float finalDamage = CalculateElementalDamage(amount, weaponElement);
+        currentHp -= finalDamage;
+
+        Debug.Log($"{myData.monsterName}이 {weaponElement} 속성 공격을 받아 {finalDamage}의 데미지를 입음! (남은체력: {currentHp})");
+
+        if (currentHp <= 0)
+        {
+            DieAndDropCoin();
+        }
+    }
+
+    private float CalculateElementalDamage(float baseDamage, string weaponElement)
+    {
+        if (myData == null) return baseDamage;
+
+        switch (myData.monsterElement)
+        {
+            case MonsterData.ElementType.Nature:
+                if (weaponElement == "Fire") return baseDamage * 2f;
+                break;
+            case MonsterData.ElementType.Fire:
+                if (weaponElement == "Water") return baseDamage * 2f;
+                break;
+            case MonsterData.ElementType.Water:
+                if (weaponElement == "Nature") return baseDamage * 2f;
+                break;
+        }
+        return baseDamage;
     }
 
     private void DieAndDropCoin()
     {
-        if (deathSound != null)
+        if (myData != null)
         {
-            AudioSource.PlayClipAtPoint(deathSound, transform.position);
-        }
-
-        if (coinPrefab != null)
-        {
-            Instantiate(coinPrefab, transform.position, Quaternion.identity);
+            if (myData.deathSound != null) AudioSource.PlayClipAtPoint(myData.deathSound, transform.position);
+            if (myData.coinPrefab != null) Instantiate(myData.coinPrefab, transform.position, Quaternion.identity);
         }
 
         Destroy(gameObject);

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: d17a836fa0f40a84995cb11664909c2d
+guid: f119dea1fc8a0da499d36445b6e10fba
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -1611398987838859312
-    second: Rigby_0
+      213: -7138048147325816913
+    second: WaterSlime_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Rigby_0
+      name: WaterSlime_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 1
         y: 0
-        width: 420
-        height: 512
+        width: 31
+        height: 25
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0d7d07a782923a9e0800000000000000
-      internalID: -1611398987838859312
+      spriteID: faf620d670f80fc90800000000000000
+      internalID: -7138048147325816913
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Rigby_0: -1611398987838859312
+      WaterSlime_0: -7138048147325816913
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
