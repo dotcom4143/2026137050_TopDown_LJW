@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdf2ee627b32e064c94c303a61a3caab, type: 3}
   m_Name: TreeData
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
-  monsterName: NatureData
+  monsterName: NatureTree
   monsterElement: 3
-  hp: 0
-  speed: 0
+  maxHp: 100
+  moveSpeed: 2
   monsterSprite: {fileID: 3756553104934971025, guid: 223df0b247974cd4395531d186bcf328, type: 3}
+  deathSound: {fileID: 0}
+  coinPrefab: {fileID: 3424940645648825798, guid: d0b6b739e7dd04c44bfce87efada5244, type: 3}

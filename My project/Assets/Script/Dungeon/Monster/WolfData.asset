@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: FireWolf
   monsterElement: 2
-  hp: 0
-  speed: 0
+  maxHp: 100
+  moveSpeed: 2
   monsterSprite: {fileID: 6743045710341077571, guid: 2685d206fcdf7844daad90c1a9cfa00f, type: 3}
+  deathSound: {fileID: 0}
+  coinPrefab: {fileID: 3424940645648825798, guid: d0b6b739e7dd04c44bfce87efada5244, type: 3}

@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: NormalSkeleton
   monsterElement: 0
-  hp: 0
-  speed: 0
+  maxHp: 100
+  moveSpeed: 2
   monsterSprite: {fileID: 118187891302787720, guid: 0cd726e4b43b5b4438607593bd22ec1a, type: 3}
+  deathSound: {fileID: 0}
+  coinPrefab: {fileID: 3424940645648825798, guid: d0b6b739e7dd04c44bfce87efada5244, type: 3}

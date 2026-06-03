@@ -43,9 +43,18 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public void ApplySlow(float slowAmount)
+    {
+        currentMoveSpeed *= slowAmount;
+    }
+
+    public void RemoveSlow(float slowAmount)
+    {
+        currentMoveSpeed /= slowAmount;
+    }
+
     public void TakeDamage(float amount, string weaponElement)
     {
-        // 상성 데미지 계산 함수 호출
         float finalDamage = CalculateElementalDamage(amount, weaponElement);
         currentHp -= finalDamage;
 
