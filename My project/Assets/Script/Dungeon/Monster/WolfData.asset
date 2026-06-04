@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fdf2ee627b32e064c94c303a61a3caab, type: 3}
+  m_Script: {fileID: 11500000, guid: 2e732cf454bb99c48838c00c6fccd69e, type: 3}
   m_Name: WolfData
   m_EditorClassIdentifier: Assembly-CSharp::MonsterData
   monsterName: FireWolf
   monsterElement: 2
   maxHp: 100
-  moveSpeed: 2
+  moveSpeed: 3
   monsterSprite: {fileID: 6743045710341077571, guid: 2685d206fcdf7844daad90c1a9cfa00f, type: 3}
   deathSound: {fileID: 0}
   coinPrefab: {fileID: 3424940645648825798, guid: d0b6b739e7dd04c44bfce87efada5244, type: 3}
