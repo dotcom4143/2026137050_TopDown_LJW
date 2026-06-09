@@ -1,8 +1,12 @@
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
+
+    [Header("UI 연결")]
+    [SerializeField] private TextMeshProUGUI timeText;
 
     [Header("상태 정보")]
     public float survivalTimer = 0f;
@@ -25,6 +29,11 @@ public class GameManager : MonoBehaviour
         if (isGameActive)
         {
             survivalTimer += Time.deltaTime;
+
+            if (timeText != null)
+            {
+                timeText.text = $"Time: {survivalTimer:F1}";
+            }
         }
     }
 
@@ -33,7 +42,7 @@ public class GameManager : MonoBehaviour
         isGameActive = true;
         survivalTimer = 0f;
 
-        // 스폰 시작 신호 전송
+        // 적 스폰 시작
         if (EnemySpawner.Instance != null)
         {
             EnemySpawner.Instance.StartSpawning();

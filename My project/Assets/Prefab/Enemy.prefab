@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 7612641200406132132}
   - component: {fileID: 6184854342046015139}
   - component: {fileID: -1235469099181212638}
+  - component: {fileID: 7125703809598041696}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -104,15 +105,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 79ee1d3fbb564014daa0837e55cafd4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyController
-  moveSpeed: 3
-  coinPrefab: {fileID: 3424940645648825798, guid: d0b6b739e7dd04c44bfce87efada5244, type: 3}
-  enemySprites:
-  - {fileID: 6637507541974921444, guid: 243bd767fcb9d2844ae5b1bf69dbabbd, type: 3}
-  - {fileID: -3229532024695154714, guid: ec3a90b6dc1300648b3aa720d09219ce, type: 3}
-  - {fileID: -8385222122240126650, guid: 83786222b3d3e3340aef058cfd5d0141, type: 3}
-  - {fileID: -4010546888659211728, guid: 30c7b073e1aa338469fcda77b27fe305, type: 3}
-  - {fileID: 9073129635015214217, guid: 3d744ddab463cb44b9bbd1a6c05cdff0, type: 3}
-  - {fileID: -1611398987838859312, guid: d17a836fa0f40a84995cb11664909c2d, type: 3}
-  - {fileID: -1301972279269352334, guid: e9cd2ee3cb3aa964f9d3631e24804ac9, type: 3}
-  - {fileID: 8539441943925407411, guid: 0f66d45fe3f1e3143b45da05721ed33c, type: 3}
-  deathSound: {fileID: 8300000, guid: 8492f0d1d4ab240448c215e9a9af1c36, type: 3}
+--- !u!58 &7125703809598041696
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7805915991088652906}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 0.5
