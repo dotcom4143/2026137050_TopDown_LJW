@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 8396733956080505614}
   m_Layer: 7
   m_Name: WaterWave_Prefab
-  m_TagString: Untagged
+  m_TagString: skill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -165,8 +165,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -251598259
+  m_SortingLayer: 1
   m_SortingOrder: 10
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7922372713123978414, guid: bb68d4e8344244269927452bde734770, type: 3}

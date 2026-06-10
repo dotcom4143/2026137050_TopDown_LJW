@@ -21,8 +21,6 @@ public class EnemyController : MonoBehaviour
         {
             playerTransform = player.transform;
         }
-
-        if (myData == null) Invoke("DieAndDropCoin", 5f);
     }
 
     public void Setup(MonsterData data)

@@ -1,121 +1,85 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class PlayerCombat : MonoBehaviour
 {
     public enum WeaponElement { Normal, Fire, Water, Nature, Light, Darkness }
 
-    [Header("현재 장착 무기")]
+    [Header("설정 및 참조")]
     public WeaponElement currentWeapon = WeaponElement.Normal;
-
-    [Header("속성별 프리팹 등록")]
-    [SerializeField] private GameObject normalArrowPrefab;
-    [SerializeField] private GameObject fireArrowPrefab;
-    [SerializeField] private GameObject waterArrowPrefab;
-    [SerializeField] private GameObject natureArrowPrefab;
-    [SerializeField] private GameObject lightArrowPrefab;
-    [SerializeField] private GameObject darknessArrowPrefab;
-
-    [Header("스킬 프리팹 등록")]
-    [SerializeField] private GameObject fireZonePrefab;
-    [SerializeField] private GameObject natureZonePrefab;
-    [SerializeField] private GameObject waterWavePrefab;
-
-    [Header("공격/이동 설정")]
     [SerializeField] private Transform shotPoint;
     [SerializeField] private Camera mainCamera;
     [SerializeField] private float bowDistance = 1.2f;
     [SerializeField] private float attackDamage = 5f;
-    [SerializeField] private float blinkDistance = 5f;
-    [SerializeField] private LayerMask obstacleLayer;
 
-    private float natureAttackTimer;
-    private float natureAttackCooldown = 1.5f;
+    [Header("데이터 및 프리팹")]
+    private Dictionary<WeaponElement, GameObject> arrowPrefabs = new Dictionary<WeaponElement, GameObject>();
+    private Dictionary<WeaponElement, GameObject> skillPrefabs = new Dictionary<WeaponElement, GameObject>();
+    private Dictionary<WeaponElement, SkillData> skillDataMap = new Dictionary<WeaponElement, SkillData>();
 
-    void Start()
+    [SerializeField] private SkillData normalData, fireData, waterData, natureData;
+    [SerializeField] private GameObject normalArrow, fireArrow, waterArrow, natureArrow;
+    [SerializeField] private GameObject normalSkill, fireZone, waterWave, natureZone;
+
+    private Dictionary<string, float> lastUsedTimes = new Dictionary<string, float>();
+
+    void Awake()
     {
-        if (mainCamera == null) mainCamera = Camera.main;
+        InitializeMaps();
+    }
+
+    private void InitializeMaps()
+    {
+        arrowPrefabs = new Dictionary<WeaponElement, GameObject> { { WeaponElement.Normal, normalArrow }, { WeaponElement.Fire, fireArrow }, { WeaponElement.Water, waterArrow }, { WeaponElement.Nature, natureArrow } };
+        skillPrefabs = new Dictionary<WeaponElement, GameObject> { { WeaponElement.Normal, normalSkill }, { WeaponElement.Fire, fireZone }, { WeaponElement.Water, waterWave }, { WeaponElement.Nature, natureZone } };
+        skillDataMap = new Dictionary<WeaponElement, SkillData> { { WeaponElement.Normal, normalData }, { WeaponElement.Fire, fireData }, { WeaponElement.Water, waterData }, { WeaponElement.Nature, natureData } };
     }
 
     void Update()
     {
-        HandleInput();
-        if (shotPoint == null || mainCamera == null) return;
         RotateAndPositionBow();
-        if (natureAttackTimer > 0) natureAttackTimer -= Time.deltaTime;
         if (Input.GetMouseButtonDown(0)) ExecuteM1Attack();
         if (Input.GetMouseButtonDown(1)) ExecuteM2Skill();
     }
 
-    private void HandleInput()
-    {
-        if (Input.GetKeyDown(KeyCode.Alpha1)) currentWeapon = WeaponElement.Normal;
-        if (Input.GetKeyDown(KeyCode.Alpha2)) currentWeapon = WeaponElement.Fire;
-        if (Input.GetKeyDown(KeyCode.Alpha3)) currentWeapon = WeaponElement.Water;
-        if (Input.GetKeyDown(KeyCode.Alpha4)) currentWeapon = WeaponElement.Nature;
-        if (Input.GetKeyDown(KeyCode.Alpha5)) currentWeapon = WeaponElement.Light;
-        if (Input.GetKeyDown(KeyCode.Alpha6)) currentWeapon = WeaponElement.Darkness;
-    }
-
-    private void RotateAndPositionBow()
-    {
-        Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        Vector3 targetDirection = (mousePosition - transform.position).normalized;
-        targetDirection.z = 0;
-        shotPoint.position = transform.position + targetDirection * bowDistance;
-        float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-        shotPoint.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-    }
-
     private void ExecuteM1Attack()
     {
-        GameObject prefab = GetArrowPrefab();
-        if (prefab == null) return;
-        if (currentWeapon == WeaponElement.Nature && natureAttackTimer > 0) return;
-
-        GameObject arrow = Instantiate(prefab, shotPoint.position, shotPoint.rotation);
+        if (!arrowPrefabs.ContainsKey(currentWeapon)) return;
+        GameObject arrow = Instantiate(arrowPrefabs[currentWeapon], shotPoint.position, shotPoint.rotation);
         arrow.GetComponent<BaseProjectile>()?.Setup(attackDamage, currentWeapon.ToString());
-
-        if (currentWeapon == WeaponElement.Nature) natureAttackTimer = natureAttackCooldown;
     }
 
     private void ExecuteM2Skill()
     {
-        switch (currentWeapon)
-        {
-            case WeaponElement.Normal: ExecuteNormalSkill(); break;
-            case WeaponElement.Fire: ExecuteFireSkill(); break;
-            case WeaponElement.Water: ExecuteWaterSkill(); break;
-            case WeaponElement.Nature: ExecuteNatureSkill(); break;
-            case WeaponElement.Light: ExecuteLightSkill(); break;
-        }
+        if (!skillDataMap.ContainsKey(currentWeapon) || !CanUseSkill(skillDataMap[currentWeapon])) return;
+
+        SkillData data = skillDataMap[currentWeapon];
+        GameObject prefab = skillPrefabs[currentWeapon];
+        Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
+        mousePos.z = 0;
+
+        GameObject skillObj = Instantiate(prefab, (currentWeapon == WeaponElement.Water) ? transform.position : mousePos, Quaternion.identity);
+        
+        ApplySkillData(skillObj, data, mousePos);
+
+        lastUsedTimes[data.skillName] = Time.time;
     }
 
-    private GameObject GetArrowPrefab() => currentWeapon switch
+    private void ApplySkillData(GameObject obj, SkillData data, Vector3 targetPos)
     {
-        WeaponElement.Normal => normalArrowPrefab,
-        WeaponElement.Fire => fireArrowPrefab,
-        WeaponElement.Water => waterArrowPrefab,
-        WeaponElement.Nature => natureArrowPrefab,
-        WeaponElement.Light => lightArrowPrefab,
-        _ => darknessArrowPrefab
-    };
-
-    private void ExecuteNormalSkill() {}
-    private void ExecuteFireSkill()
-    {
-        GameObject zone = Instantiate(fireZonePrefab, mainCamera.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-        zone.GetComponent<FireZone>()?.Setup(attackDamage * 0.5f, 4f, 0.5f, "Fire");
+        if (obj.TryGetComponent<WaterWave>(out var water)) water.Setup((targetPos - transform.position).normalized, data.damage);
+        else if (obj.TryGetComponent<FireZone>(out var fire)) fire.Setup(data.damage, data.duration, 0.5f, "Fire");
+        else if (obj.TryGetComponent<NatureZone>(out var nature)) nature.Setup(data.duration, data.damage);
+        else if (obj.TryGetComponent<NormalSkill>(out var normal)) normal.Setup(data.damage);
     }
-    private void ExecuteWaterSkill()
+
+    private bool CanUseSkill(SkillData data) => data != null && (!lastUsedTimes.ContainsKey(data.skillName) || Time.time >= lastUsedTimes[data.skillName] + data.cooldown);
+
+    private void RotateAndPositionBow()
     {
         Vector3 dir = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
         dir.z = 0;
-        Instantiate(waterWavePrefab, transform.position, Quaternion.identity).GetComponent<WaterWave>()?.Setup(dir);
+        shotPoint.position = transform.position + dir * bowDistance;
+        shotPoint.rotation = Quaternion.AngleAxis(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, Vector3.forward);
     }
-    private void ExecuteNatureSkill()
-    {
-        GameObject zone = Instantiate(natureZonePrefab, mainCamera.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
-        zone.GetComponent<NatureZone>()?.Setup(4f);
-    }
-    private void ExecuteLightSkill() {}
 }

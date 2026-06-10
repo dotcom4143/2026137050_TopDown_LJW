@@ -4,10 +4,12 @@ public class WaterWave : MonoBehaviour
 {
     private float speed = 10f;
     private float knockbackForce = 15f;
-    private float damage = 10f;
+    private float damage;
 
-    public void Setup(Vector3 direction)
+    public void Setup(Vector3 direction, float damage)
     {
+        this.damage = damage;
+        
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
 

@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1f76b02366f701e41bc67687a6229b9d
+guid: 62988a1419e9a7544be3b1ffec1c0f01
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -9097940640319185200
-    second: Dunggul_0
+      213: 3313733511368546993
+    second: New Piskel (13)_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -37,7 +37,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 0
+    filterMode: 1
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -75,7 +75,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 0
+    textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -100,7 +100,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Dunggul_0
+      name: New Piskel (13)_0
       rect:
         serializedVersion: 2
         x: 0
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 0de5f2ac03f9db180800000000000000
-      internalID: -9097940640319185200
+      spriteID: 1ba1e69521fbcfd20800000000000000
+      internalID: 3313733511368546993
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Dunggul_0: -9097940640319185200
+      New Piskel (13)_0: 3313733511368546993
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

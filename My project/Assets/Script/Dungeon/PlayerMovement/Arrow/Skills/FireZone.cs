@@ -12,10 +12,11 @@ public class FireZone : MonoBehaviour
 
     public void Setup(float dmg, float dur, float inter, string ele)
     {
-        damage = dmg;
-        duration = dur;
-        interval = inter;
-        element = ele;
+        this.damage = dmg;
+        this.duration = dur;
+        this.interval = inter;
+        this.element = ele;
+        
         StartCoroutine(DotDamageRoutine());
         Destroy(gameObject, duration);
     }

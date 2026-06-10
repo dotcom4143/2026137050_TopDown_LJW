@@ -17,5 +17,5 @@ MonoBehaviour:
   maxHp: 100
   moveSpeed: 3
   monsterSprite: {fileID: 3756553104934971025, guid: 223df0b247974cd4395531d186bcf328, type: 3}
-  deathSound: {fileID: 0}
+  deathSound: {fileID: 8300000, guid: 150c80c5e23c473488751f768fe4bf22, type: 3}
   coinPrefab: {fileID: 3424940645648825798, guid: d0b6b739e7dd04c44bfce87efada5244, type: 3}

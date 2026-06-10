@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - Skill
   layers:
   - Default
   - TransparentFX
@@ -44,6 +45,12 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Skill
+    uniqueID: 4043369037
+    locked: 0
+  - name: Enemy
+    uniqueID: 787269735
     locked: 0
   m_RenderingLayers:
   - Default
