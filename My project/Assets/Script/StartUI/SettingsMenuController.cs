@@ -56,14 +56,7 @@ public class SettingsMenuController : MonoBehaviour
         
         closeButton.onClick.AddListener(ClosePanel);
 
-        Debug.Log($"[SettingsMenuController] Awake 실행됨! 저장 경로: {savePath}");
-
-        SaveDataToJSON();
-
-        if (Directory.Exists(Application.persistentDataPath))
-        {
-            System.Diagnostics.Process.Start(Application.persistentDataPath);
-        }
+        LoadDataFromJSON();
     }
 
     public void OpenPanel()
@@ -161,7 +154,6 @@ public class SettingsMenuController : MonoBehaviour
         {
             string json = JsonUtility.ToJson(saveData, true);
             File.WriteAllText(savePath, json);
-            Debug.Log("[SettingsMenuController] JSON 파일 생성 및 저장 완료!");
         }
         catch (System.Exception e)
         {

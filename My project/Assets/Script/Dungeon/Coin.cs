@@ -16,6 +16,11 @@ public class Coin : MonoBehaviour
                 AudioSource.PlayClipAtPoint(collectSound, transform.position);
             }
 
+            if (GameManager.Instance != null)
+            {
+                DataManager.Instance.AddCoin(coinValue);
+            }
+
             if (DataManager.Instance != null)
             {
                 DataManager.Instance.AddCoin(coinValue);
@@ -24,4 +29,5 @@ public class Coin : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
 }

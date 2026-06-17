@@ -42,7 +42,6 @@ public class GameManager : MonoBehaviour
         isGameActive = true;
         survivalTimer = 0f;
 
-        // 적 스폰 시작
         if (EnemySpawner.Instance != null)
         {
             EnemySpawner.Instance.StartSpawning();
@@ -65,8 +64,10 @@ public class GameManager : MonoBehaviour
             if (survivalTimer > DataManager.Instance.data.maxSurvivalTime)
             {
                 DataManager.Instance.data.maxSurvivalTime = survivalTimer;
-                DataManager.Instance.SaveData();
             }
+            
+            DataManager.Instance.SaveData(); 
+            Debug.Log("DataManager를 통해 코인 및 기록 저장 완료!");
         }
 
         Debug.Log($"게임 종료! 기록: {survivalTimer:F2}초");
