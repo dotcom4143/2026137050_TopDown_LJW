@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3388697418431216280}
-  - component: {fileID: 7427732682659790934}
   - component: {fileID: 386245747681311446}
   - component: {fileID: -7505003109869352384}
+  - component: {fileID: 2710254317772874622}
+  - component: {fileID: 1262715740908389295}
   m_Layer: 0
   m_Name: "\uC57C \uB3D9\uC804 \uC65C\uC6B0\uB294\uAC70\uC57C_0"
   m_TagString: Untagged
@@ -34,19 +35,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7427732682659790934
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3424940645648825798}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 18a09a450b0c0a749a958c5e9972eea0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ImNotSad
-  collectSound: {fileID: 8300000, guid: 2f0f3a4880d420f4d80d82f5b9340398, type: 3}
 --- !u!212 &386245747681311446
 SpriteRenderer:
   serializedVersion: 2
@@ -142,3 +130,44 @@ CircleCollider2D:
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
   m_Radius: 0.16
+--- !u!50 &2710254317772874622
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424940645648825798}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1262715740908389295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3424940645648825798}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12e39ad5ad344e2439519881b14b2876, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Coin
+  collectSound: {fileID: 8300000, guid: 2f0f3a4880d420f4d80d82f5b9340398, type: 3}
+  coinValue: 1

@@ -14,5 +14,7 @@ public class NormalArrow : BaseProjectile
             Vector2 knockbackDirection = (enemy.transform.position - transform.position).normalized;
             enemyRb.AddForce(knockbackDirection * knockbackForce, ForceMode2D.Impulse);
         }
+
+        Destroy(gameObject);
     }
 }

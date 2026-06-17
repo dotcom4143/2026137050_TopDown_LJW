@@ -1,13 +1,15 @@
 using UnityEngine;
 using System.IO;
+using System;
 
 public class DataManager : MonoBehaviour
 {
     public static DataManager Instance;
 
     public GameData data = new GameData();
-
     private string filePath;
+
+    public static event Action<int> OnCoinChanged;
 
     void Awake()
     {
@@ -26,6 +28,12 @@ public class DataManager : MonoBehaviour
         LoadData();
     }
 
+    public void AddCoin(int amount)
+    {
+        data.totalCoins += amount;
+        OnCoinChanged?.Invoke(data.totalCoins);
+    }
+
     public void SaveData()
     {
         string json = JsonUtility.ToJson(data, true);
@@ -38,6 +46,7 @@ public class DataManager : MonoBehaviour
         {
             string json = File.ReadAllText(filePath);
             data = JsonUtility.FromJson<GameData>(json);
+            OnCoinChanged?.Invoke(data.totalCoins);
         }
     }
 }

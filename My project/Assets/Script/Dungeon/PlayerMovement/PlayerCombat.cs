@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.IO;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -23,9 +24,21 @@ public class PlayerCombat : MonoBehaviour
 
     private Dictionary<string, float> lastUsedTimes = new Dictionary<string, float>();
 
+    [System.Serializable]
+    private class UpgradeData
+    {
+        public int damageLevel = 0;
+    }
+
     void Awake()
     {
+        if (mainCamera == null) mainCamera = Camera.main;
         InitializeMaps();
+    }
+
+    void Start()
+    {
+        ApplyJsonUpgrades();
     }
 
     private void InitializeMaps()
@@ -37,15 +50,31 @@ public class PlayerCombat : MonoBehaviour
 
     void Update()
     {
+        HandleWeaponSwitch();
         RotateAndPositionBow();
         if (Input.GetMouseButtonDown(0)) ExecuteM1Attack();
         if (Input.GetMouseButtonDown(1)) ExecuteM2Skill();
     }
 
+    private void HandleWeaponSwitch()
+    {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) currentWeapon = WeaponElement.Normal;
+        else if (Input.GetKeyDown(KeyCode.Alpha2)) currentWeapon = WeaponElement.Fire;
+        else if (Input.GetKeyDown(KeyCode.Alpha3)) currentWeapon = WeaponElement.Water;
+        else if (Input.GetKeyDown(KeyCode.Alpha4)) currentWeapon = WeaponElement.Nature;
+    }
+
     private void ExecuteM1Attack()
     {
-        if (!arrowPrefabs.ContainsKey(currentWeapon)) return;
-        GameObject arrow = Instantiate(arrowPrefabs[currentWeapon], shotPoint.position, shotPoint.rotation);
+        if (!arrowPrefabs.ContainsKey(currentWeapon) || arrowPrefabs[currentWeapon] == null) return;
+        if (shotPoint == null) return;
+
+        Vector3 spawnPos = transform.position;
+        Vector3 shootDirection = (shotPoint.position - transform.position).normalized;
+        float angle = Mathf.Atan2(shootDirection.y, shootDirection.x) * Mathf.Rad2Deg;
+        Quaternion spawnRot = Quaternion.AngleAxis(angle, Vector3.forward);
+
+        GameObject arrow = Instantiate(arrowPrefabs[currentWeapon], spawnPos, spawnRot);
         arrow.GetComponent<BaseProjectile>()?.Setup(attackDamage, currentWeapon.ToString());
     }
 
@@ -58,7 +87,12 @@ public class PlayerCombat : MonoBehaviour
         Vector3 mousePos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
         mousePos.z = 0;
 
-        GameObject skillObj = Instantiate(prefab, (currentWeapon == WeaponElement.Water) ? transform.position : mousePos, Quaternion.identity);
+        Vector3 skillDir = (mousePos - transform.position).normalized;
+        float skillAngle = Mathf.Atan2(skillDir.y, skillDir.x) * Mathf.Rad2Deg;
+        Quaternion skillRotation = Quaternion.AngleAxis(skillAngle, Vector3.forward);
+
+        Vector3 skillSpawnPos = (currentWeapon == WeaponElement.Water || currentWeapon == WeaponElement.Normal) ? transform.position : mousePos;
+        GameObject skillObj = Instantiate(prefab, skillSpawnPos, skillRotation);
         
         ApplySkillData(skillObj, data, mousePos);
 
@@ -81,5 +115,31 @@ public class PlayerCombat : MonoBehaviour
         dir.z = 0;
         shotPoint.position = transform.position + dir * bowDistance;
         shotPoint.rotation = Quaternion.AngleAxis(Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg, Vector3.forward);
+    }
+
+    private void ApplyJsonUpgrades()
+    {
+        string savePath = Path.Combine(Application.persistentDataPath, "SaveData.json");
+
+        if (File.Exists(savePath))
+        {
+            try
+            {
+                string json = File.ReadAllText(savePath);
+                UpgradeData data = JsonUtility.FromJson<UpgradeData>(json);
+
+                attackDamage += data.damageLevel;
+
+                Debug.Log($"[공격력 강화 적용 완료] 공격력 LV.{data.damageLevel} -> 최종 공격력: {attackDamage}");
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[강화 로드 실패] JSON 해석 중 오류 발생: {e.Message}");
+            }
+        }
+        else
+        {
+            Debug.Log("[공격력 강화] 세이브 파일이 없어 기본 능력치로 시작합니다.");
+        }
     }
 }

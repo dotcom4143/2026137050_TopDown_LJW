@@ -9,6 +9,11 @@ public class EnemyController : MonoBehaviour
     private float currentHp;
     private float currentMoveSpeed;
 
+    [Header("Monster Attack Settings")]
+    [SerializeField] private float attackDamage = 10f;
+    [SerializeField] private float attackCooldown = 1f;
+    private float lastAttackTime;
+
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -92,5 +97,34 @@ public class EnemyController : MonoBehaviour
         }
 
         Destroy(gameObject);
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            TryAttackPlayer(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            TryAttackPlayer(collision.gameObject);
+        }
+    }
+
+    private void TryAttackPlayer(GameObject playerObj)
+    {
+        if (Time.time >= lastAttackTime + attackCooldown)
+        {
+            PlayerController player = playerObj.GetComponent<PlayerController>();
+            if (player != null)
+            {
+                player.TakeDamage(attackDamage);
+                lastAttackTime = Time.time;
+            }
+        }
     }
 }

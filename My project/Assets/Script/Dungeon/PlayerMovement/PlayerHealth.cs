@@ -8,7 +8,7 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.CompareTag("Enemy"))
         {
-            TakeDamage(20f);
+            TakeDamage(10f);
         }
     }
 
@@ -26,6 +26,13 @@ public class PlayerHealth : MonoBehaviour
     private void Die()
     {
         Debug.Log("게임 오버");
+
+        ReturnToMainMenu uiController = FindFirstObjectByType<ReturnToMainMenu>();
+        if (uiController != null)
+        {
+            uiController.OnPlayerDead();
+        }
+
         if (GameManager.Instance != null)
         {
             GameManager.Instance.EndGame();

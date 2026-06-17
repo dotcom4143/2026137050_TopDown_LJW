@@ -12,7 +12,7 @@ public class LightArrow : BaseProjectile
 
     protected override void Update()
     {
-        // 빛 평타는 날아가지 않으므로 부모의 Update(이동 로직)를 무시함
+
     }
 
     private void ExecuteHitscan()

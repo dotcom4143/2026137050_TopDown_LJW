@@ -23,19 +23,25 @@ public class FireZone : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy != null && !enemiesInZone.Contains(enemy))
+        if (collision.CompareTag("Enemy"))
         {
-            enemiesInZone.Add(enemy);
+            EnemyController enemy = collision.GetComponent<EnemyController>();
+            if (enemy != null && !enemiesInZone.Contains(enemy))
+            {
+                enemiesInZone.Add(enemy);
+            }
         }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        EnemyController enemy = collision.GetComponent<EnemyController>();
-        if (enemy != null && enemiesInZone.Contains(enemy))
+        if (collision.CompareTag("Enemy"))
         {
-            enemiesInZone.Remove(enemy);
+            EnemyController enemy = collision.GetComponent<EnemyController>();
+            if (enemy != null && enemiesInZone.Contains(enemy))
+            {
+                enemiesInZone.Remove(enemy);
+            }
         }
     }
 

@@ -14,7 +14,10 @@ public class WaterWave : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, angle);
 
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
-        rb.linearVelocity = direction * speed;
+        if (rb != null)
+        {
+            rb.linearVelocity = direction * speed;
+        }
         Destroy(gameObject, 2f);
     }
 
